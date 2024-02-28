@@ -1,14 +1,14 @@
-
+import allure
 import pytest
 
 from data import DataAnswer, DataTitle
 from locators.main_page_locators import MainPageLocators
-from locators.order_page_locators import OrderPageLocators
 from pages.main_page import MainPage
 
 
 class TestMainPage:
 
+    @allure.title('Проверка открытия вопроса и сравнение ожидаемого ответа с полученным')
     @pytest.mark.parametrize(
         'q_num,a_num,expected_result',
         [
@@ -23,9 +23,9 @@ class TestMainPage:
         ]
     )
     def test__question_and_get_answer(self, driver, q_num, a_num, expected_result):
-        driver.get('https://qa-scooter.praktikum-services.ru/')
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         main_page = MainPage(driver)
+        main_page.get_url_main()
+        main_page.scroll_down_page()
 
         method_q, locator_q = MainPageLocators.QUESTION_LOCATOR
         locator_q = locator_q.format(q_num)
@@ -39,23 +39,28 @@ class TestMainPage:
 
         assert main_page.check_answer(result, expected_result), 'Текст ответа не соответствует ожидаемому'
 
+    @allure.title('Проверка перехода на страницу оформления заказа')
     @pytest.mark.parametrize(
-        "locators",
+        "order_locators",
         [MainPageLocators.BUTTON_ORDER_FIRST,
          MainPageLocators.BUTTON_ORDER_LAST]
     )
-    def test_order_button(self, driver, locators):
-        driver.get('https://qa-scooter.praktikum-services.ru/')
+    def test_order_button(self, driver, order_locators):
         main_page = MainPage(driver)
-        main_page.scroll_to_order_and_click(locators)
-        result = main_page.get_text_from_element(OrderPageLocators.CONTENT_TITLE)
+        main_page.get_url_main()
+        main_page.scroll_to_order_and_click(order_locators)
+        result = main_page.get_content_title()
         expected_result = DataTitle.TITLE_ORDER
 
-        assert (result, expected_result), 'Не удалось перейти на страницу заказа'
+        assert result == expected_result, 'Не удалось перейти на страницу оформления заказа'
 
+
+class TestGoURL:
+
+    @allure.title('Проверка перехода на страницу "Дзен" с помощью логотоипа "Яндекс"')
     def test_jump_dzen(self, driver):
-        driver.get('https://qa-scooter.praktikum-services.ru/')
         main_page = MainPage(driver)
+        main_page.get_url_main()
         ya_url = main_page.jump_dzen_and_get_url(MainPageLocators.LOGO_YANDEX)
 
         assert 'dzen.ru' in ya_url, 'Не удалось перейти на страницу Дзен'

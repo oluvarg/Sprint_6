@@ -26,3 +26,6 @@ class BasePage:
     def scroll_to_element(self, locator):
         element = self.driver.find_element(*locator)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+
+    def jump_new_tab(self):
+        self.driver.switch_to.window(self.driver.window_handles[1])

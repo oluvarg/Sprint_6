@@ -34,7 +34,7 @@ class OrderPageLocators:
 
     FOUR_DAYS = By.XPATH, './/div[text()="четверо суток"]'
 
-    BUTTON_ORDER = By.XPATH, './/button[2][text() = "Заказать"]'  # /html/body/div/div/div[2]/div[3]/button[2]
+    BUTTON_ORDER = By.XPATH, './/button[2][text() = "Заказать"]'
 
     BUTTON_YES = By.XPATH, './/button[text() = "Да"]'
 

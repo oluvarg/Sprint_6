@@ -1,4 +1,4 @@
-
+import allure
 import pytest
 
 from data import DataOrderForm
@@ -9,6 +9,7 @@ from pages.order_page import OrderPage
 
 class TestOrderPage:
 
+    @allure.title('Проверка оформления заказа')
     @pytest.mark.parametrize(
         'name,'
         'second_name,'
@@ -39,8 +40,8 @@ class TestOrderPage:
     )
     def test_order_form(self, driver, name, second_name, address, locator_station, date, color_locator,
                         time_locator):
-        driver.get('https://qa-scooter.praktikum-services.ru/order')
         order_page = OrderPage(driver)
+        order_page.get_url_order()
         number = DataOrderForm.number_phone
         order_page.set_text_to_first_form(OrderPageLocators.NAME_REG_LOCATOR, name,
                                           OrderPageLocators.SECOND_NAME_REG_LOCATOR, second_name,
@@ -59,9 +60,10 @@ class TestOrderPage:
 
         assert 'Заказ оформлен' and 'Номер заказа:' in result, 'Не удалось оформить заказ'
 
-    def test_jump_main_paig(self, driver):
-        driver.get('https://qa-scooter.praktikum-services.ru/order')
+    @allure.title('Проверка перехода на главную страницу')
+    def test_jump_main_paige(self, driver):
         order_page = OrderPage(driver)
+        order_page.get_url_order()
         result = order_page.jump_main_page_from_order(OrderPageLocators.LOGO_SCOOTER)
 
         assert "Сколько это стоит?" in result

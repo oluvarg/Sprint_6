@@ -19,3 +19,9 @@
  * `conftest.py` -  фикстуры
  * `date.py` - данные для параметризации
  * `README.md`
+
+## Запуск тестов:
+
+* `pytest .\tests\test_main_page.py, .\tests\test_order_page.py --alluredir=allure_results` - Запуск и получение allure отчета
+
+* `allure serve allure_results` - отображение полученных отчетов
