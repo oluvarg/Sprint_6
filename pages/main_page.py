@@ -8,12 +8,12 @@ from pages.base_page import BasePage
 class MainPage(BasePage):
 
     @allure.step('Переход на главную страницу сайта')
-    def get_url_main(self):
-        self.driver.get('https://qa-scooter.praktikum-services.ru/')
+    def go_to_url_main(self):
+        self.go_to_url('https://qa-scooter.praktikum-services.ru/')
 
     @allure.step('Скролл в конец страницы')
-    def scroll_down_page(self):
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+    def scroll_to_last_question(self):
+        self.scroll_to_element(MainPageLocators.QUESTION_LOCATOR_FOR_PAGE)
 
     @allure.step('Нажиматие на вопрос и получение ответа')
     def click_to_question_and_get_answer_text(self, locator_q, locator_a):
@@ -34,10 +34,9 @@ class MainPage(BasePage):
         return self.get_text_from_element(OrderPageLocators.CONTENT_TITLE)
 
     @allure.step('Нажатие на логотип "Яндекс" и получение url')
-    def jump_dzen_and_get_url(self, logo_locator):
-        self.click_on_element(logo_locator)
+    def jump_dzen_and_get_url(self):
+        self.click_on_element(MainPageLocators.LOGO_YANDEX)
         self.jump_new_tab()
         if self.find_element_with_wait(MainPageLocators.CLOSE_WINDOW_DZEN):
             self.click_on_element(MainPageLocators.CLOSE_WINDOW_DZEN)
-        ya_url = self.driver.current_url
-        return ya_url
+        return self.get_url_for_page_for_test()

@@ -41,7 +41,7 @@ class TestOrderPage:
     def test_order_form(self, driver, name, second_name, address, locator_station, date, color_locator,
                         time_locator):
         order_page = OrderPage(driver)
-        order_page.get_url_order()
+        order_page.go_to_url_order()
         number = DataOrderForm.number_phone
         order_page.set_text_to_first_form(OrderPageLocators.NAME_REG_LOCATOR, name,
                                           OrderPageLocators.SECOND_NAME_REG_LOCATOR, second_name,
@@ -63,7 +63,6 @@ class TestOrderPage:
     @allure.title('Проверка перехода на главную страницу')
     def test_jump_main_paige(self, driver):
         order_page = OrderPage(driver)
-        order_page.get_url_order()
-        result = order_page.jump_main_page_from_order(OrderPageLocators.LOGO_SCOOTER)
-
+        order_page.go_to_url_order()
+        result = order_page.jump_main_page_from_order_and_get_content()
         assert "Сколько это стоит?" in result

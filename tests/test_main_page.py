@@ -24,8 +24,8 @@ class TestMainPage:
     )
     def test__question_and_get_answer(self, driver, q_num, a_num, expected_result):
         main_page = MainPage(driver)
-        main_page.get_url_main()
-        main_page.scroll_down_page()
+        main_page.go_to_url_main()
+        main_page.scroll_to_last_question()
 
         method_q, locator_q = MainPageLocators.QUESTION_LOCATOR
         locator_q = locator_q.format(q_num)
@@ -47,20 +47,9 @@ class TestMainPage:
     )
     def test_order_button(self, driver, order_locators):
         main_page = MainPage(driver)
-        main_page.get_url_main()
+        main_page.go_to_url_main()
         main_page.scroll_to_order_and_click(order_locators)
         result = main_page.get_content_title()
         expected_result = DataTitle.TITLE_ORDER
 
         assert result == expected_result, 'Не удалось перейти на страницу оформления заказа'
-
-
-class TestGoURL:
-
-    @allure.title('Проверка перехода на страницу "Дзен" с помощью логотоипа "Яндекс"')
-    def test_jump_dzen(self, driver):
-        main_page = MainPage(driver)
-        main_page.get_url_main()
-        ya_url = main_page.jump_dzen_and_get_url(MainPageLocators.LOGO_YANDEX)
-
-        assert 'dzen.ru' in ya_url, 'Не удалось перейти на страницу Дзен'

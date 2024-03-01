@@ -29,3 +29,9 @@ class BasePage:
 
     def jump_new_tab(self):
         self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def go_to_url(self, url):
+        self.driver.get(url)
+
+    def get_url_for_page_for_test(self):
+        return self.driver.current_url

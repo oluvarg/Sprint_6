@@ -5,6 +5,8 @@ class MainPageLocators:
 
     QUESTION_LOCATOR = By.XPATH, './/div[@id="accordion__heading-{}"]'
 
+    QUESTION_LOCATOR_FOR_PAGE = By.XPATH, './/div[@id="accordion__heading-7"]'
+
     ANSWER_LOCATOR = By.XPATH, './/div[@aria-labelledby="accordion__heading-{}"]'
 
     QUESTION_LOCATOR_FIRST = By.XPATH, './/div[@id="accordion__heading-0"]'
